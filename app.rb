@@ -62,5 +62,13 @@ end
 
 get('/patron/:id') do
   @patron = Patron.find(params.fetch('id').to_i())
+  @books = Book.all()
+  erb(:individual_patron)
+end
+
+post('/checkout_book') do
+  @patron = Patron.find(params.fetch('patron_id').to_i())
+  @books = Book.all()
+  @book = Book.find(params.fetch('book_id').to_i())
   erb(:individual_patron)
 end

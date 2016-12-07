@@ -1,1 +1,25 @@
 <h1>Hello, <%= @patron.name() %>, how art thou this fine morn'?</h1>
+
+<div class="row">
+  <div class="col-md-4">
+    <h4>Books Available</h4>
+    <form action="/checkout_book" method="post">
+      <select id='book_id' name='book_id' type='text'>
+        <% @books.each() do |book| %>
+          <option value="<%= book.id()%>"> <%= book.title() %> </option>
+        <% end %>
+      </select>
+      <br>
+      <input name="patron_id" type="hidden" value="<%= @patron.id() %>">
+      <button type="submit" class="btn btn-danger">Checkout Book</button>
+    </form>
+  </div>
+  <div class="col-md-4">
+    <h4>Books Currently Checked Out with Due Date</h4>
+    <!--accommodate multiple books-->
+    <%= @book.title() %>
+  </div>
+  <div class="col-md-4">
+    <h4>Book Checkout History</h4>
+  </div>
+</div>
