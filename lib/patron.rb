@@ -1,8 +1,9 @@
 class Patron
-  attr_reader(:name)
+  attr_reader(:name, :id)
 
   define_method(:initialize) do |attributes|
     @name = attributes.fetch(:name)
+    @id = attributes.fetch(:id)
   end
 
   define_singleton_method(:all) do
@@ -10,16 +11,18 @@ class Patron
     patrons = []
     returned_patrons.each() do |patron|
       name = patron.fetch("name")
-      patrons.push(Patron.new({:name => name}))
+      id = patron.fetch("id").to_i
+      patrons.push(Patron.new({:name => name, :id => id}))
     end
     patrons
   end
 
   define_method(:save) do
-    DB.exec("INSERT INTO patrons (name) VALUES ('#{@name}');")
+    result = DB.exec("INSERT INTO patrons (name) VALUES ('#{@name}') RETURNING id;")
+    @id = result.first().fetch("id").to_i()
   end
 
   define_method(:==) do |another_patron|
-    self.name().==(another_patron.name())
+    self.name().==(another_patron.name()).&(self.id().==(another_patron.id()))
   end
 end
