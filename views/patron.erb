@@ -1,0 +1,14 @@
+<h3>Add Perfect Patron Profile for Prolific Page Perusing</h3>
+<form action="/add_patron" method="post">
+  <div class="form-group">
+    <input id="name" name="name" placeholder="Name">
+  </div>
+  <button type="submit" class="btn btn-success">Add Patron</button>
+</form>
+
+<h3>All Patrons</h3>
+<ul>
+  <% @patrons.each() do |patron| %>
+  <li><a href="/patron/<%= patron.id() %>"><%= patron.name() %></a></li>
+  <% end %>
+</ul>

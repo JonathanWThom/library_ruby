@@ -46,3 +46,16 @@ post('/search_author') do
   @found_authors = Author.search(name)
   erb(:search_author_page)
 end
+
+get('/patron') do
+  @patrons = Patron.all()
+  erb(:patron)
+end
+
+post('/add_patron') do
+  name = params.fetch('name')
+  patron = Patron.new({:name => name, :id => nil})
+  patron.save()
+  @patrons = Patron.all()
+  erb(:patron)
+end
