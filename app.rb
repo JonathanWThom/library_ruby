@@ -27,3 +27,9 @@ delete('/delete_book') do
   @books = Book.all()
   erb(:index)
 end
+
+post('/search') do
+  title = params.fetch('title')
+  @found_books = Book.search(title)
+  erb(:search_page)
+end
