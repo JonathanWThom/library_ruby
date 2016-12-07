@@ -35,4 +35,14 @@ class Book
     found_book = Book.new(:title => book_id_found.fetch('title'), :id => book_id_found.fetch('id').to_i())
     found_book
   end
+
+  define_singleton_method(:search) do |searched_book|
+    books = DB.exec("SELECT * FROM books WHERE title = '#{searched_book}';")
+    found_books = []
+    books.each() do |book|
+      current_book = Book.new(:title => book.fetch('title'), :id => book.fetch('id').to_i())
+      found_books.push(current_book)
+    end
+    found_books
+  end
 end

@@ -54,4 +54,11 @@ describe(Book) do
       expect(Book.find(@book.id())).to(eq(@book))
     end
   end
+
+  describe('.search') do
+    it('returns a book that you searched for') do
+      @book.save()
+      expect(Book.search(@book.title())).to(eq([@book]))
+    end
+  end
 end
