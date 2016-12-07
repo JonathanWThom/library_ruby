@@ -1,0 +1,16 @@
+<% if @found_authors.any?() %>
+
+<h3>Success! Found author name:</h3>
+
+<ul>
+  <% @found_authors.each() do |author| %>
+  <li> <%= author.name() %></li>
+  <% end %>
+</ul>
+
+<% else %>
+<h3>Sorry we couldn't find your author name!</h3>
+
+<% end %>
+
+<a href="/">Return to Homepage</a>

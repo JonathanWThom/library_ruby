@@ -21,6 +21,13 @@ post('/add_book') do
   erb(:success)
 end
 
+post('/add_author') do
+  name = params.fetch('name')
+  author = Author.new({:name => name, :id => nil})
+  author.save()
+  erb(:success)
+end
+
 delete('/delete_book') do
   @book = Book.find(params.fetch('book_id').to_i())
   @book.delete()
@@ -28,8 +35,14 @@ delete('/delete_book') do
   erb(:index)
 end
 
-post('/search') do
+post('/search_book') do
   title = params.fetch('title')
   @found_books = Book.search(title)
-  erb(:search_page)
+  erb(:search_book_page)
+end
+
+post('/search_author') do
+  name = params.fetch('author')
+  @found_authors = Author.search(name)
+  erb(:search_author_page)
 end
