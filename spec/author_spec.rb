@@ -37,4 +37,11 @@ describe(Author) do
       expect(@author).to(eq(new_author))
     end
   end
+
+  describe('.search') do
+    it('returns an author name that you searched for') do
+      @author.save()
+      expect(Author.search(@author.name())).to(eq([@author]))
+    end
+  end
 end

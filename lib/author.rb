@@ -25,4 +25,14 @@ class Author
   define_method(:==) do |another_author|
     self.name().==(another_author.name()).&(self.id().==(another_author.id()))
   end
+
+  define_singleton_method(:search) do |searched_author|
+    authors = DB.exec("SELECT * FROM authors WHERE name = '#{searched_author}';")
+    found_authors = []
+    authors.each() do |author|
+      current_author = Author.new(:name => author.fetch('name'), :id => author.fetch('id').to_i())
+      found_authors.push(current_author)
+    end
+    found_authors
+  end
 end
