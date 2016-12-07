@@ -35,4 +35,10 @@ class Patron
     @id = self.id()
     DB.exec("UPDATE patrons SET name = '#{@name}' WHERE id = #{@id};")
   end
+
+  define_singleton_method(:find) do |patron_id|
+    patron_id_found = DB.exec("SELECT * FROM patrons WHERE id = '#{patron_id}';").first()
+    found_patron = Patron.new(:name => patron_id_found.fetch('name'), :id => patron_id_found.fetch('id').to_i())
+    found_patron
+  end
 end

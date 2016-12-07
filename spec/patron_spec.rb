@@ -55,4 +55,12 @@ describe(Patron) do
       expect(@patron.name()).to(eq('Upton Sinclair'))
     end
   end
+
+  describe('.find') do
+    it('lets you find the patron by id') do
+      @patron.save()
+      expect(Patron.find(@patron.id())).to(eq(@patron))
+    end
+  end
+
 end

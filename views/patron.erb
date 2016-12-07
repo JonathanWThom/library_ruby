@@ -7,6 +7,7 @@
 </form>
 
 <h3>All Patrons</h3>
+<h5>Click on your profile to see available books</h5>
 <ul>
   <% @patrons.each() do |patron| %>
   <li><a href="/patron/<%= patron.id() %>"><%= patron.name() %></a></li>

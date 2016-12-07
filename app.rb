@@ -59,3 +59,8 @@ post('/add_patron') do
   @patrons = Patron.all()
   erb(:patron)
 end
+
+get('/patron/:id') do
+  @patron = Patron.find(params.fetch('id').to_i())
+  erb(:individual_patron)
+end
