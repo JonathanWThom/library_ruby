@@ -29,4 +29,10 @@ class Book
   define_method(:delete) do
     DB.exec("DELETE FROM books WHERE id = #{self.id()};")
   end
+
+  define_singleton_method(:find) do |book_id|
+    book_id_found = DB.exec("SELECT * FROM books WHERE id = '#{book_id}';").first()
+    found_book = Book.new(:title => book_id_found.fetch('title'), :id => book_id_found.fetch('id').to_i())
+    found_book
+  end
 end

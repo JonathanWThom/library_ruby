@@ -39,12 +39,19 @@ describe(Book) do
   end
 
   describe('#delete') do
-    it('lets you delete a book inte database') do
+    it('lets you delete a book in to database') do
       new_book = Book.new({:title => 'Harry Potter', :id => nil})
       new_book.save()
       @book.save()
       @book.delete()
       expect(Book.all()).to(eq([new_book]))
+    end
+  end
+
+  describe('.find') do
+    it('lets you find the book by id') do
+      @book.save()
+      expect(Book.find(@book.id())).to(eq(@book))
     end
   end
 end

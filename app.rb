@@ -16,8 +16,14 @@ end
 
 post('/add_book') do
   title = params.fetch('title')
-  author = params.fetch('author')
-  book = Book.new({:title => title, :author => author, :id => nil})
+  book = Book.new({:title => title, :id => nil})
   book.save()
   erb(:success)
+end
+
+delete('/delete_book') do
+  @book = Book.find(params.fetch('book_id').to_i())
+  @book.delete()
+  @books = Book.all()
+  erb(:index)
 end
