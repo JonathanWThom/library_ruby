@@ -12,9 +12,19 @@
   <button type="submit" class="btn btn-info">Add</button>
 </form>
 
-<h3>All Books</h3>
-<ul>
-  <% @books.each() do |book| %>
-  <li> <%= book.title() %> by <%= book.author() %></li>
-  <% end %>
-</ul>
+<div class="row">
+  <div class="col-md-6">
+    <h3>All Books</h3>
+    <ul>
+      <% @books.each() do |book| %>
+      <li> <%= book.title() %> by <%= book.author() %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <h3>Delete Books</h3>
+    
+  </div>
+
+
+</div>
