@@ -45,4 +45,26 @@ class Book
     end
     found_books
   end
+
+  define_method(:update) do |attributes|
+    @title = attributes.fetch(:title, @title)
+    DB.exec("UPDATE books SET title = '#{@title}' WHERE id = #{self.id()};")
+
+    attributes.fetch(:author_ids, []).each() do |author_id|
+      DB.exec("INSERT INTO authors_books (author_id, book_id) VALUES (#{author_id}, #{self.id()});")
+    end
+  end
+
+  define_method(:authors) do
+    book_authors = []
+    results = DB.exec("SELECT author_id FROM authors_books WHERE book_id = #{self.id()};")
+    results.each() do |result|
+      author_id = result.fetch("author_id").to_i()
+      author = DB.exec("SELECT * FROM authors WHERE id = #{author_id};")
+      name = author.first().fetch("name")
+      book_authors.push(Author.new({:name => name, :id => author_id}))
+    end
+    book_authors
+  end
+
 end

@@ -61,4 +61,30 @@ describe(Book) do
       expect(Book.search(@book.title())).to(eq([@book]))
     end
   end
+
+  describe("#update") do
+    it("returns all of the authors of a particular book") do
+      book = Book.new({:title => "Plainsong", :id => nil})
+      book.save()
+      author1 = Author.new({:name => "Smith", :id => nil})
+      author1.save()
+      author2 = Author.new({:name => "McPhee", :id => nil})
+      author2.save()
+      book.update({:author_ids => [author1.id(), author2.id()]})
+      expect(book.authors()).to(eq([author1, author2]))
+    end
+  end
+
+  describe("#authors") do
+    it('returns all of the authors of a particular book') do
+      book = Book.new({:title => "Plainsong", :id => nil})
+      book.save()
+      author1 = Author.new({:name => "Smith", :id => nil})
+      author1.save()
+      author2 = Author.new({:name => "McPhee", :id => nil})
+      author2.save()
+      book.update({:author_ids => [author1.id(), author2.id()]})
+      expect(book.authors()).to(eq([author1, author2]))
+    end
+  end
 end
