@@ -2,7 +2,7 @@ require('spec_helper')
 
 describe(Book) do
   before() do
-    @book = Book.new({:title => 'Harry Potter', :author => 'JK Rowling'})
+    @book = Book.new({:title => 'Harry Potter', :author => 'JK Rowling', :id => nil})
   end
 
   describe('#title') do
@@ -14,6 +14,13 @@ describe(Book) do
   describe('#author') do
     it('returns the author of the book') do
       expect(@book.author()).to(eq('JK Rowling'))
+    end
+  end
+
+  describe("#id") do
+    it("sets its ID when you save it") do
+      @book.save()
+      expect(@book.id()).to(be_an_instance_of(Fixnum))
     end
   end
 
@@ -32,10 +39,18 @@ describe(Book) do
 
   describe('#==') do
     it('is the same book if the titles and authors are the same text') do
-      new_book = Book.new({:title => 'Harry Potter', :author => 'JK Rowling'})
+      new_book = Book.new({:title => 'Harry Potter', :author => 'JK Rowling', :id => nil})
+      expect(@book).to(eq(new_book))
+    end
+  end
+
+  describe('#delete') do
+    it('lets you delete a book inte database') do
+      new_book = Book.new({:title => 'Harry Potter', :author => 'JK Rowling', :id => nil})
       new_book.save()
       @book.save()
-      expect(@book).to(eq(new_book))
+      @book.delete()
+      expect(Book.all()).to(eq([new_book]))
     end
   end
 end
