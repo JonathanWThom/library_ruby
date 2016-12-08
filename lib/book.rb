@@ -54,6 +54,10 @@ class Book
     attributes.fetch(:author_ids, []).each() do |author_id|
       DB.exec("INSERT INTO authors_books (author_id, book_id) VALUES (#{author_id}, #{self.id()});")
     end
+
+    attributes.fetch(:patron_ids, []).each() do |patron_id|
+      DB.exec("INSERT INTO checkouts (patron_id, book_id) VALUES (#{patron_id}, #{self.id()});")
+    end
   end
 
   define_method(:authors) do
@@ -66,6 +70,18 @@ class Book
       book_authors.push(Author.new({:name => name, :id => author_id}))
     end
     book_authors
+  end
+
+  define_method(:patrons) do
+    book_patrons = []
+    results = DB.exec("SELECT patron_id FROM checkouts WHERE book_id = #{self.id()};")
+    results.each() do |result|
+      patron_id = result.fetch("patron_id").to_i()
+      patron = DB.exec("SELECT * FROM patrons WHERE id = #{patron_id};")
+      name = patron.first().fetch("name")
+      book_patrons.push(Patron.new({:name => name, :id => patron_id}))
+    end
+    book_patrons
   end
 
 end

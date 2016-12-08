@@ -79,6 +79,17 @@ describe(Book) do
       book.update({:author_ids => [author1.id(), author2.id()]})
       expect(book.authors()).to(eq([author1, author2]))
     end
+
+    it("lets you add a patron to a book") do
+      book = Book.new({:title => "Plainsong", :id => nil})
+      book.save()
+      patron1 = Patron.new({:name => "Smith", :id => nil})
+      patron1.save()
+      patron2 = Patron.new({:name => "McPhee", :id => nil})
+      patron2.save()
+      book.update({:patron_ids => [patron1.id(), patron2.id()]})
+      expect(book.patrons()).to(eq([patron1, patron2]))
+    end
   end
 
   describe("#authors") do
@@ -91,6 +102,19 @@ describe(Book) do
       author2.save()
       book.update({:author_ids => [author1.id(), author2.id()]})
       expect(book.authors()).to(eq([author1, author2]))
+    end
+  end
+
+  describe("#patrons") do
+    it('returns all of the patrons of a particular book') do
+      book = Book.new({:title => "Plainsong", :id => nil})
+      book.save()
+      patron1 = Patron.new({:name => "Smith", :id => nil})
+      patron1.save()
+      patron2 = Patron.new({:name => "McPhee", :id => nil})
+      patron2.save()
+      book.update({:patron_ids => [patron1.id(), patron2.id()]})
+      expect(book.patrons()).to(eq([patron1, patron2]))
     end
   end
 end
