@@ -70,6 +70,8 @@ patch('/patron/:id') do
   patron_id = params.fetch('id').to_i()
   @patron = Patron.find(patron_id)
   book_ids = params.fetch('book_ids')
+
+#this causes it to post twice for some reason
   book_ids.each() do |book_id|
     book = Book.find(book_id)
     @patron.checkout(book)

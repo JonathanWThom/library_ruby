@@ -2,6 +2,7 @@ require('capybara/rspec')
 require('./app')
 Capybara.app = Sinatra::Application
 set(:show_exceptions, false)
+require('pry')
 
 describe('adding a new book', {:type => :feature}) do
   it('allows an admin to add a book') do
