@@ -39,7 +39,7 @@ describe(Book) do
   end
 
   describe('#delete') do
-    it('lets you delete a book in to database') do
+    it('lets you delete a book in the database') do
       new_book = Book.new({:title => 'Harry Potter', :id => nil})
       new_book.save()
       @book.save()
@@ -63,6 +63,12 @@ describe(Book) do
   end
 
   describe("#update") do
+    it('lets you update books in the database') do
+      @book.save()
+      @book.update({:title => 'Moby Dick', :id => nil})
+      expect(@book.title()).to(eq('Moby Dick'))
+    end
+
     it("returns all of the authors of a particular book") do
       book = Book.new({:title => "Plainsong", :id => nil})
       book.save()
