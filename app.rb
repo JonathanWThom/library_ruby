@@ -15,7 +15,7 @@ get('/') do
 end
 
 post('/add_book') do
-  title = params.fetch('title')
+  title = params.fetch('add_title')
   book = Book.new({:title => title, :id => nil})
   book.save()
   erb(:success)
