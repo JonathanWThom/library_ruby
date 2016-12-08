@@ -54,7 +54,31 @@ describe(Patron) do
       @patron.update({:name => 'Upton Sinclair'})
       expect(@patron.name()).to(eq('Upton Sinclair'))
     end
+
+    it("lets you add a patron to a book") do
+      patron = Patron.new({:name => "Bob the Builder", :id => nil})
+      patron.save()
+      book1 = Book.new({:title => "How to Build Things Good", :id => nil})
+      book1.save()
+      book2 = Book.new({:title => "How to Build Things Even Better", :id => nil})
+      book2.save()
+      patron.update({:book_ids => [book1.id(), book2.id()]})
+      expect(patron.books()).to(eq([book1, book2]))
+    end
   end
+
+  describe("#books") do
+   it("returns all of the books for a particular patron") do
+     patron = Patron.new({:name => "Bob the Builder", :id => nil})
+     patron.save()
+     book1 = Book.new({:title => "How to Build Things Good", :id => nil})
+     book1.save()
+     book2 = Book.new({:title => "How to Build Things Even Better", :id => nil})
+     book2.save()
+     patron.update({:book_ids => [book1.id(), book2.id()]})
+     expect(patron.books()).to(eq([book1, book2]))
+   end
+ end
 
   describe('.find') do
     it('lets you find the patron by id') do

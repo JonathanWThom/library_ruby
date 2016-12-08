@@ -69,7 +69,7 @@ describe(Book) do
       expect(@book.title()).to(eq('Moby Dick'))
     end
 
-    it("returns all of the authors of a particular book") do
+    it("lets you add an author to a book") do
       book = Book.new({:title => "Plainsong", :id => nil})
       book.save()
       author1 = Author.new({:name => "Smith", :id => nil})

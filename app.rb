@@ -72,3 +72,6 @@ post('/checkout_book') do
   @book = Book.find(params.fetch('book_id').to_i())
   erb(:individual_patron)
 end
+
+#due_date = #time now plus 2 weeks or something like that
+#use due date as a parameter when making a new checkout? 

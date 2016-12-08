@@ -31,9 +31,25 @@ class Patron
   end
 
   define_method(:update) do |attributes|
-    @name = attributes.fetch(:name)
+    @name = attributes.fetch(:name, @name)
     @id = self.id()
     DB.exec("UPDATE patrons SET name = '#{@name}' WHERE id = #{@id};")
+
+    attributes.fetch(:book_ids, []).each() do |book_id|
+      DB.exec("INSERT INTO checkouts (book_id, patron_id) VALUES (#{book_id}, #{self.id()});")
+    end
+  end
+
+  define_method(:books) do
+    patron_books = []
+    results = DB.exec("SELECT book_id FROM checkouts WHERE patron_id = #{self.id()};")
+    results.each() do |result|
+      book_id = result.fetch("book_id").to_i()
+      book = DB.exec("SELECT * FROM books WHERE id = #{book_id};")
+      title = book.first().fetch('title')
+      patron_books.push(Book.new({:title => title, :id => book_id}))
+    end
+    patron_books
   end
 
   define_singleton_method(:find) do |patron_id|
