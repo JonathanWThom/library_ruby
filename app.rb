@@ -70,10 +70,25 @@ patch('/patron/:id') do
   patron_id = params.fetch('id').to_i()
   @patron = Patron.find(patron_id)
   book_ids = params.fetch('book_ids')
-  due_date = Time.now()
+  # due_date = Time.now()
   @patron.update({:book_ids => book_ids})
   @books = Book.all()
   erb(:individual_patron)
+end
+
+get('/books/:id') do
+  @book = Book.find(params.fetch("id").to_i())
+  @authors = Author.all()
+  erb(:individual_book)
+end
+
+patch('/books/:id') do
+  book_id = params.fetch('id').to_i
+  @book = Book.find(book_id)
+  author_ids = params.fetch('author_ids')
+  @book.update({:author_ids => author_ids})
+  @authors = Author.all()
+  erb(:individual_book)
 end
 
 #due_date = #time now plus 2 weeks or something like that
