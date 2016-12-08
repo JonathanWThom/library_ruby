@@ -44,4 +44,29 @@ describe(Author) do
       expect(Author.search(@author.name())).to(eq([@author]))
     end
   end
+
+  describe("#update") do
+    it('lets you add a book to an author') do
+      book = Book.new({:title => '10,000 Leagues Under the Sea', :id => nil})
+      book.save()
+      author = Author.new({:name => 'Jules Verne', :id => nil})
+      author.save()
+      author.update({:book_ids => [book.id()]})
+      expect(author.books()).to(eq([book]))
+    end
+  end
+
+  describe("#books") do
+    it('returns all the books by an author') do
+      book = Book.new({:title => '10,000 Leagues Under the Sea', :id => nil})
+      book.save()
+      book2 = Book.new({:title => 'Moby Dick', :id => nil})
+      book2.save()
+      author = Author.new({:name => 'Jules Verne', :id => nil})
+      author.save()
+      author.update(:book_ids => [book.id()])
+      author.update(:book_ids => [book2.id()])
+      expect(author.books()).to(eq([book, book2]))
+    end
+  end
 end
