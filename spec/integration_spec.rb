@@ -58,3 +58,18 @@ describe('add an author to a book', {:type => :feature}) do
     expect(page).to have_content('Here are all the authors credited:')
   end
 end
+
+describe('check out a book', {:type => :feature}) do
+  it('allows user to check out a book') do
+    book = Book.new({:title => "Little Women", :id => nil})
+    book.save()
+    visit('/')
+    patron = Patron.new({:name => "Jonathan Thom", :id => nil})
+    patron.save()
+    click_link('Click Here for Patron Access')
+    click_link('Jonathan Thom')
+    page.check('Little Women')
+    click_button('Checkout Book')
+    expect(page).to have_content("Due:")
+  end
+end

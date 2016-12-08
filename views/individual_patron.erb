@@ -19,7 +19,7 @@
   <div class="col-md-4">
     <h4>Books Currently Checked Out with Due Date</h4>
     <% @patron.books.each() do |book| %>
-    <li><%= book.title() %></li>
+    <li><%= book.title() %><h6>Due: <%= book.due_date(@patron) %></h5></li>
     <% end %>
 
   </div>
