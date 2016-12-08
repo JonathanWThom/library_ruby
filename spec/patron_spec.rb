@@ -87,4 +87,15 @@ describe(Patron) do
     end
   end
 
+  describe('#checkout') do
+    it('assigns a due date to a book') do
+      @patron.save()
+      book1 = Book.new({:title => "How to Build Things Good", :id => nil})
+      book1.save()
+      @patron.checkout(book1)
+      expect(book1.due_date(@patron)).not_to be_empty
+      #better way to spec this as well
+    end
+  end
+
 end

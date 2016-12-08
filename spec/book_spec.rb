@@ -117,4 +117,15 @@ describe(Book) do
       expect(book.patrons()).to(eq([patron1, patron2]))
     end
   end
+
+  describe('due_date') do
+    it('returns the due date of a checked out book') do
+      @book.save()
+      patron1 = Patron.new({:name => "Smith", :id => nil})
+      patron1.save()
+      patron1.checkout(@book)
+      expect(@book.due_date(patron1)).not_to be_empty
+      ##there is a better way to spec this
+    end
+  end
 end

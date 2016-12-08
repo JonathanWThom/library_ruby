@@ -59,4 +59,9 @@ class Patron
     found_patron = Patron.new(:name => patron_id_found.fetch('name'), :id => patron_id_found.fetch('id').to_i())
     found_patron
   end
+
+  define_method(:checkout) do |book|
+    due_date = Time.now + 14
+    DB.exec("INSERT INTO checkouts (patron_id, book_id, due_date) VALUES (#{self.id}, #{book.id}, '#{due_date}');")
+  end
 end

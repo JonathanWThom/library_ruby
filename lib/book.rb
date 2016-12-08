@@ -85,4 +85,12 @@ class Book
     book_patrons
   end
 
+  define_method(:due_date) do |patron|
+    due_date = nil
+    results = DB.exec("SELECT due_date FROM checkouts WHERE patron_id = #{patron.id()} AND book_id = #{self.id()};")
+    results.each() do |result|
+      due_date = result.fetch("due_date")
+    end
+    due_date
+  end
 end
