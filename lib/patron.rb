@@ -39,6 +39,7 @@ class Patron
     attributes.fetch(:book_ids, []).each() do |book_id|
       DB.exec("INSERT INTO checkouts (book_id, patron_id) VALUES (#{book_id}, #{self.id()});")
     end
+
   end
 
   define_method(:books) do

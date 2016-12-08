@@ -18,7 +18,9 @@
   </div>
   <div class="col-md-4">
     <h4>Books Currently Checked Out with Due Date</h4>
-    <!--accommodate multiple books-->
+    <% @patron.books.each() do |book| %>
+    <li><%= book.title() %></li>
+    <% end %>
 
   </div>
   <div class="col-md-4">

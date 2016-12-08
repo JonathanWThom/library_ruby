@@ -70,6 +70,7 @@ patch('/patron/:id') do
   patron_id = params.fetch('id').to_i()
   @patron = Patron.find(patron_id)
   book_ids = params.fetch('book_ids')
+  due_date = Time.now()
   @patron.update({:book_ids => book_ids})
   @books = Book.all()
   erb(:individual_patron)
