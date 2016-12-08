@@ -66,12 +66,14 @@ get('/patron/:id') do
   erb(:individual_patron)
 end
 
-post('/checkout_book') do
-  @patron = Patron.find(params.fetch('patron_id').to_i())
+patch('/patron/:id') do
+  patron_id = params.fetch('id').to_i()
+  @patron = Patron.find(patron_id)
+  book_ids = params.fetch('book_ids')
+  @patron.update({:book_ids => book_ids})
   @books = Book.all()
-  @book = Book.find(params.fetch('book_id').to_i())
   erb(:individual_patron)
 end
 
 #due_date = #time now plus 2 weeks or something like that
-#use due date as a parameter when making a new checkout? 
+#use due date as a parameter when making a new checkout?
