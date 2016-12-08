@@ -28,6 +28,7 @@ class Patron
 
   define_method(:delete) do
     DB.exec("DELETE FROM patrons WHERE id = #{self.id()};")
+    DB.exec("DELETE FROM checkouts WHERE id = #{self.id()};")
   end
 
   define_method(:update) do |attributes|
